@@ -26,6 +26,7 @@ class TransactionExtension {
 
       const transactionDtoOrError =  CreateTransactionDto.create(type, date, product, price, seller)
       
+
       if (transactionDtoOrError.isLeft()){
         return left(transactionDtoOrError.value)
       }

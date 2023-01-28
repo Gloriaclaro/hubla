@@ -16,8 +16,11 @@ class TransactionsController {
     @Post('upload')
     async uploadFile(@Body() file: string) {
       const transactionsOrError = await this.transactionsService.processAndSaveTransactions(file)
+
       if (transactionsOrError.isLeft()){
-        return {"Error": transactionsOrError}
+        return {
+          "error": transactionsOrError.value.name,
+          "message": transactionsOrError.value.message}
       }
       return transactionsOrError.value
     }
