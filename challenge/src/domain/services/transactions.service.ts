@@ -4,6 +4,7 @@ import { ReturnTransactionDto } from 'src/domain/dto/return-transaction.dto';
 import { Transaction } from 'src/domain/entities/transactions.entity';
 import { Either, left, right } from 'src/shared/either';
 import CreateTransactionDto from '../dto/create-transaction.dto';
+import { FindError } from '../errors/find-error';
 import { InsertionError } from '../errors/insert-error';
 import { InvalidTransactionError } from '../errors/invalid-transaction-error';
 import TransactionExtension from '../extension/transaction.extension';
@@ -14,13 +15,16 @@ export class TransactionsService {
   constructor(private readonly transactionsRepository: TransactionsRepository) {}
 
 
-  getAllTransactions(): Promise<Array<Transaction>>{
-    return this.transactionsRepository.getAll()
+  async getAllTransactions(): Promise<Either<FindError, Promise<Transaction[]>>>{
+    const transactionsOrError = await this.transactionsRepository.getAll()
+    if (transactionsOrError.isLeft()){
+      return left(transactionsOrError.value)
+    }
+    return right(transactionsOrError.value)
   }
 
-  async processAndSaveTransactions(file: string): Promise<Either<InsertionError | InvalidTransactionError, ReturnTransactionDto>> {
-    const rawTransactions = Buffer.from(file['file'], 'base64').toString('utf8')
-    const processedTransactionsOrError = await this.processTransactions(rawTransactions)
+  async processAndSaveTransactions(transactions: string): Promise<Either<InsertionError | InvalidTransactionError, ReturnTransactionDto>> {
+    const processedTransactionsOrError = await this.processTransactions(transactions)
 
     if (processedTransactionsOrError.isLeft()) {
       return left(processedTransactionsOrError.value);

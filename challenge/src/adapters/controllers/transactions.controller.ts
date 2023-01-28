@@ -1,5 +1,6 @@
-import { Body, Controller, Get } from '@nestjs/common';
+import { Body, Controller, Get, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { Post } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { Transaction } from 'src/domain/entities/transactions.entity';
 import { TransactionsService } from '../../domain/services/transactions.service';
 
@@ -9,13 +10,22 @@ class TransactionsController {
   constructor(private readonly transactionsService: TransactionsService) {}
 
     @Get('transactions')
-    async getTransactions(): Promise<Array<Transaction>> {
-    return this.transactionsService.getAllTransactions();
+    async getTransactions(){
+    const transactionsOrError = await this.transactionsService.getAllTransactions();
+    if (transactionsOrError.isLeft()){
+      return {
+        "error": transactionsOrError.value.name,
+        "message": transactionsOrError.value.message}
     }
+      return transactionsOrError.value
+    }
+    
 
     @Post('upload')
-    async uploadFile(@Body() file: string) {
-      const transactionsOrError = await this.transactionsService.processAndSaveTransactions(file)
+    @UseInterceptors(FileInterceptor('file'))
+    async uploadFileTest(@UploadedFile() file: Express.Multer.File) {
+      const fileContent = file.buffer.toString()
+      const transactionsOrError = await this.transactionsService.processAndSaveTransactions(fileContent)
 
       if (transactionsOrError.isLeft()){
         return {
@@ -24,5 +34,6 @@ class TransactionsController {
       }
       return transactionsOrError.value
     }
-}
+
+  }
 export default TransactionsController
