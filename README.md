@@ -5,13 +5,13 @@ The interface also show the transactions and the total value obtained.
 
 ## URLs
 
-Frontend page: http://localhost:3000/transactions
-Backend swagger: http://localhost:4000/api
-Postgres admin: http://localhost:8080/
-    - user: admin
-    - password: admin
-    - database: nestjs
-    - table: transaction
+* Frontend page: http://localhost:3000/transactions
+* Backend swagger: http://localhost:4000/api
+* Postgres admin: http://localhost:8080/
+    * user: admin
+    * password: admin
+    * database: nestjs
+    * table: transaction
 	
 ## Technologies
 Project is created with:
