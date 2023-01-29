@@ -17,7 +17,7 @@ const Transactions = () => {
     await axios
       .get(url)
       .then((response) => {
-        setTransactions(response.data);
+        setTransactions(response.data.transaction);
       })
       .catch((e) => {
         toast.error('Ops! Fail to load data.', {

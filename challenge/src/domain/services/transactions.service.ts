@@ -15,12 +15,16 @@ export class TransactionsService {
   constructor(private readonly transactionsRepository: TransactionsRepository) {}
 
 
-  async getAllTransactions(): Promise<Either<FindError, Promise<Array<Transaction>>>>{
+  async getAllTransactions(): Promise<Either<FindError, ReturnTransactionDto>>{
     const transactionsOrError = await this.transactionsRepository.getAll()
     if (transactionsOrError.isLeft()){
       return left(transactionsOrError.value)
     }
-    return right(transactionsOrError.value)
+    const returnTransactionsDto = new ReturnTransactionDto()
+    returnTransactionsDto.transaction = await transactionsOrError.value
+    returnTransactionsDto.message = "Transactions load with success"
+    
+    return right(returnTransactionsDto)
   }
 
   async processAndSaveTransactions(transactions: string): Promise<Either<InsertionError | InvalidTransactionError, ReturnTransactionDto>> {

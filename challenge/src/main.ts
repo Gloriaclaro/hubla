@@ -7,7 +7,7 @@ async function bootstrap() {
 
   const config = new DocumentBuilder()
     .setTitle('Transactions report')
-    .setDescription('This')
+    .setDescription('This api save and get transactions from a file upload')
     .setVersion('1.0')
     .addTag('transactions')
     .build();
