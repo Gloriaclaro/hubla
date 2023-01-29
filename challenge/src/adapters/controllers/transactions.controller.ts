@@ -31,7 +31,7 @@ class TransactionsController {
   @ApiConsumes('multipart/form-data')
   @ApiOperation({ summary: 'Receive a file, process and save in postgres. Return all registered transactions' })
   @ApiResponse({ status: 200, description: 'Successful operation', type: ReturnTransactionDto})
-  async uploadFileTest(@UploadedFile() @Body() file: Express.Multer.File): Promise<ReturnErrorDto | ReturnTransactionDto>{
+  async uploadFile(@UploadedFile() @Body() file: Express.Multer.File): Promise<ReturnErrorDto | ReturnTransactionDto>{
     const fileContent = file.buffer.toString();
     const transactionsOrError =
       await this.transactionsService.processAndSaveTransactions(fileContent);

@@ -1,4 +1,4 @@
-import { Either, left, right } from 'src/shared/either';
+import { Either, left, right } from '../../shared/either';
 import InvalidTransactionError from '../errors/invalid-transaction-error';
 
 class CreateTransactionDto {

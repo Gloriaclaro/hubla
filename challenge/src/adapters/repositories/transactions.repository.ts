@@ -2,12 +2,12 @@ import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable } from '@nestjs/common';
 import { ITransactionRepository } from '../../domain/repositories/transactionRepository.interface';
-import CreateTransactionDto from 'src/domain/dto/create-transaction.dto';
-import TransactionExtension from 'src/domain/extension/transaction.extension';
-import { Either, left, right } from 'src/shared/either';
-import Transaction from 'src/domain/entities/transactions.entity';
-import FindError from 'src/domain/errors/find-error';
-import InsertionError from 'src/domain/errors/insert-error';
+import CreateTransactionDto from '../../domain/dto/create-transaction.dto';
+import TransactionExtension from '../../domain/extension/transaction.extension';
+import { Either, left, right } from '../../shared/either';
+import Transaction from '../../domain/entities/transactions.entity';
+import FindError from '../../domain/errors/find-error';
+import InsertionError from '../../domain/errors/insert-error';
 
 @Injectable()
 class TransactionsRepository implements ITransactionRepository {

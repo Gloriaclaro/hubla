@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import TransactionsRepository from 'src/adapters/repositories/transactions.repository';
-import { Either, left, right } from 'src/shared/either';
+import TransactionsRepository from '../../adapters/repositories/transactions.repository';
+import { Either, left, right } from '../../shared/either';
 import CreateTransactionDto from '../dto/create-transaction.dto';
 import ReturnTransactionDto from '../dto/return-transaction.dto';
 import Transaction from '../entities/transactions.entity';

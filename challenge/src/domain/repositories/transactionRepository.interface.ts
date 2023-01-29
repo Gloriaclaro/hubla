@@ -1,4 +1,4 @@
-import { Either } from 'src/shared/either';
+import { Either } from '../../shared/either';
 import CreateTransactionDto from '../dto/create-transaction.dto';
 import Transaction from '../entities/transactions.entity';
 import FindError from '../errors/find-error';
