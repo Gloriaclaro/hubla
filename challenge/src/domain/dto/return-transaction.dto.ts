@@ -1,6 +1,7 @@
-import { Transaction } from '../../domain/entities/transactions.entity';
+import Transaction from "../entities/transactions.entity"
 
-export class ReturnTransactionDto {
-  transaction: Array<Transaction>;
-  message: string;
+class ReturnTransactionDto {
+  transaction: Array<Transaction>
+  message: string
 }
+export default ReturnTransactionDto

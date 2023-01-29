@@ -1,12 +1,12 @@
 import { Either, left, right } from 'src/shared/either';
-import { InvalidTransactionError } from '../errors/invalid-transaction-error';
+import InvalidTransactionError from '../errors/invalid-transaction-error';
 
 class CreateTransactionDto {
-    type: string;
-    date: Date;
-    product: string;
-    price: number;
-    seller: string;
+    type: string
+    date: Date
+    product: string
+    price: number
+    seller: string
 
     private constructor(type: string, date: Date, product: string, price: number, seller: string) {
         this.type = type

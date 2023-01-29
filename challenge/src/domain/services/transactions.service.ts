@@ -1,12 +1,12 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import TransactionsRepository from 'src/adapters/repositories/transactions.repository';
-import { ReturnTransactionDto } from 'src/domain/dto/return-transaction.dto';
-import { Transaction } from 'src/domain/entities/transactions.entity';
 import { Either, left, right } from 'src/shared/either';
 import CreateTransactionDto from '../dto/create-transaction.dto';
-import { FindError } from '../errors/find-error';
-import { InsertionError } from '../errors/insert-error';
-import { InvalidTransactionError } from '../errors/invalid-transaction-error';
+import ReturnTransactionDto from '../dto/return-transaction.dto';
+import Transaction from '../entities/transactions.entity';
+import FindError from '../errors/find-error';
+import InsertionError from '../errors/insert-error';
+import InvalidTransactionError from '../errors/invalid-transaction-error';
 import TransactionExtension from '../extension/transaction.extension';
 
 
@@ -15,7 +15,7 @@ export class TransactionsService {
   constructor(private readonly transactionsRepository: TransactionsRepository) {}
 
 
-  async getAllTransactions(): Promise<Either<FindError, Promise<Transaction[]>>>{
+  async getAllTransactions(): Promise<Either<FindError, Promise<Array<Transaction>>>>{
     const transactionsOrError = await this.transactionsRepository.getAll()
     if (transactionsOrError.isLeft()){
       return left(transactionsOrError.value)

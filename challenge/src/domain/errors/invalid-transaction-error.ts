@@ -1,9 +1,8 @@
+class InvalidTransactionError extends Error {
+  public readonly name = 'InvalidTransactionError';
 
-export class InvalidTransactionError extends Error {
-    public readonly name = 'InvalidTransactionError'
-
-    constructor (field: string) {
-
-        super('Invalid field: '+ field + '.')
-    }
+  constructor(field: string) {
+    super('Invalid field: ' + field + '.');
+  }
 }
+export default InvalidTransactionError;
