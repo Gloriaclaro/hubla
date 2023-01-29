@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { ITransactions } from "@/domain/interfaces/transaction.interface";
+import { toast } from "react-toastify"
+
 
 const Transactions = () => {
   const initTransactions: Array<ITransactions> = [];
@@ -18,7 +20,16 @@ const Transactions = () => {
         setTransactions(response.data);
       })
       .catch((e) => {
-        console.log(e);
+        toast.error('Ops! Fail to load data.', {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          });
       });
   };
   const getTotalTransactions = () => {

@@ -1,6 +1,7 @@
 import { FormEvent, useState } from "react";
 import axios from "axios";
 import { TransactionFormElement } from "../domain/interfaces/file.interface";
+import { toast } from "react-toastify"
 
 const FileUploader = () => {
   const [file, setFile] = useState({ file: {} });
@@ -29,10 +30,42 @@ const FileUploader = () => {
     await axios
       .post(url, file, { headers: { "Content-Type": "multipart/form-data" } })
       .then(({ data }) => {
-        console.log(data);
+        if (data.error){
+          toast.error("Please verify your file content." + data.message, {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            });
+        }
+        else {
+          toast.success('Transactions insertered with success!', {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            });
+        }
       })
       .catch((e) => {
-        console.log(e);
+        toast.error('Ops! Unexpected error, please verify your file.', {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          });
       });
   };
 
@@ -48,6 +81,7 @@ const FileUploader = () => {
       />
       <button type="submit">Insert transactions</button>
     </form>
+    
   );
 };
 
