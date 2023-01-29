@@ -1,0 +1,42 @@
+version: '3.1'
+
+services:
+
+  db:
+    image: postgres
+    restart: always
+    container_name: db
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    ports:
+      - '5432:5432'
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080 
+ 
+  backend:
+      image: backend:1.0.0
+      command: npm run start
+      container_name: backend
+      environment:
+        POSTGRES_HOST: db
+      ports:
+        - 4000:4000
+      restart: unless-stopped
+      links:
+        - db
+  
+  frontend:
+      image: frontend:1.0.0
+      command: npm run start
+      environment:
+        BACKEND_HOST: backend
+      ports:
+        - 3000:3000
+      restart: unless-stopped
+      links:
+        - backend

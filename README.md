@@ -2,16 +2,6 @@
 This project was developed for the hubla challenge.
 The developed project uploads a creator's file, proccess the data and save in postgres.
 The interface also show the transactions and the total value obtained.
-
-## URLs
-
-* Frontend page: http://localhost:3000/transactions
-* Backend swagger: http://localhost:4000/api
-* Postgres admin: http://localhost:8080/
-    * user: admin
-    * password: admin
-    * database: nestjs
-    * table: transaction
 	
 ## Technologies
 Project is created with:
@@ -20,7 +10,47 @@ Project is created with:
 * Postgres: Docker version (3.1)
 * Docker: 20.10.21
 * Docker compose: 1.26.0
+
+## Setup with docker-compose
+
+## Backend
+
+This command create backend image.
+
+```
+$ cd challenge/
+$ sudo docker build -t backend:1.0.0 . --no-cache
+```
+
+## Frontend
+
+This command create frontend image.
+
+```
+$ cd challenge-front/
+$ sudo docker build -t frontend:1.0.0 . --no-cache
+```
+
+## To orchestrate the project 
+
+This command run backend, frontend and prosgres with docker-compose.
+
+```
+$ cd ../
+$ sudo docker-compose up -d
+```
+
+## URLs
+
+* Frontend page: http://localhost:3000/transactions
+* Backend swagger: http://localhost:4000/api
+* Postgres admin: http://localhost:8080/
+    * user: admin
+    * password: admin
+    * database: postgres
+    * table: transaction
 	
+
 ## Setup
 To run this project, install it locally using npm:
 
@@ -40,38 +70,16 @@ $ npm install
 $ npm start
 ```
 
-## Database
+## Database docker-compose
 
 ```
 $ cd challenge/
 $ sudo docker-compose up
 ```
 
-## Setup with docker-compose
-
-## Backend
-
-This command create backend image.
+## Testing
 
 ```
 $ cd challenge/
-$ sudo docker build -t backend:1.0.0 . --no-cache
-```
-
-## Frontend
-
-This command create frontend image.
-
-```
-$ cd challenge/
-$ sudo docker build -t frontend:1.0.0 . --no-cache
-```
-
-## To orchestrate the project 
-
-This command run backend, frontend and prosgres with docker-compose.
-
-```
-$ cd ../
-$ sudo docker-compose up -d
+$ npm run test
 ```

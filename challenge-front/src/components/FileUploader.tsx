@@ -3,9 +3,10 @@ import axios from "axios";
 import { TransactionFormElement } from "../domain/interfaces/file.interface";
 import { toast } from "react-toastify"
 
+
 const FileUploader = () => {
   const [file, setFile] = useState({ file: {} });
-  const url: string = "http://localhost:4000/upload";
+  const url: string = `http://${process.env.BACKEND_HOST}:4000/upload`;
 
   const handleChange = (event: FormEvent<HTMLInputElement>) => {
     setFile({ file: event.currentTarget.value });

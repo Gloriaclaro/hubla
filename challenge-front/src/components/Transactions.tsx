@@ -7,7 +7,7 @@ import { toast } from "react-toastify"
 const Transactions = () => {
   const initTransactions: Array<ITransactions> = [];
   const [transactions, setTransactions] = useState(initTransactions);
-  const url: string = "http://localhost:4000/transactions";
+  const url: string = `http://${process.env.BACKEND_HOST}:4000/transactions`;
 
   useEffect(() => {
     requestTransactions();

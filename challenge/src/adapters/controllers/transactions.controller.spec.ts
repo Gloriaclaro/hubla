@@ -1,6 +1,6 @@
 import  InsertionError from '../../domain/errors/insert-error';
-import  TransactionsRepository  from '../../adapters/repositories/transactions.repository';
-import { Either, left, right } from './../../shared/either';
+import  TransactionsRepository  from '../repositories/transactions.repository';
+import { Either, left, right } from '../../shared/either';
 import ReturnTransactionDto from "../../domain/dto/return-transaction.dto";
 import { TransactionsService } from "../../domain/services/transactions.service";
 import TransactionsController from "./transactions.controller";
@@ -60,7 +60,7 @@ describe('TransactionsController', () => {
   });
 
   describe('getTransactions', () => {
-    it('should return an array of cats', async () => {
+    it('should return an ReturnTransactionDto', async () => {
 
         const returnTransactionsDto = new ReturnTransactionDto()
         returnTransactionsDto.transaction = []
@@ -73,7 +73,7 @@ describe('TransactionsController', () => {
   });
 
   describe('uploadFile', () => {
-    it('should return an array of cats', async () => {
+    it('should receive a file and return an ReturnTransactionDto', async () => {
 
         const returnTransactionsDto = new ReturnTransactionDto()
         returnTransactionsDto.transaction = []
