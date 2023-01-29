@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { ITransactions } from "@/domain/interfaces/transaction.interface";
 import { toast } from "react-toastify"
+import Moment from 'react-moment';
 
 
 const Transactions = () => {
@@ -34,10 +35,10 @@ const Transactions = () => {
   };
   const getTotalTransactions = () => {
     const totalTransactions = transactions.reduce(
-      (accum, obj) => accum + obj.price,
+      (accum, obj) => accum + obj.price/100,
       0
     );
-    return totalTransactions;
+    return totalTransactions.toLocaleString("pt-BR", {style: 'currency', currency: 'BRL' });
   };
 
   return (
@@ -58,9 +59,9 @@ const Transactions = () => {
               return (
                 <tr key={index}>
                   <td>{data.type}</td>
-                  <td>{data.date.toString()}</td>
+                  <td><Moment>{data.date}</Moment></td>
                   <td>{data.product}</td>
-                  <td>{data.price}</td>
+                  <td>{(data.price/100).toLocaleString("pt-BR", {style: 'currency', currency: 'BRL' })}</td>
                   <td>{data.seller}</td>
                 </tr>
               );
@@ -79,3 +80,7 @@ const Transactions = () => {
 };
 
 export default Transactions;
+function moment(date: Date) {
+  throw new Error("Function not implemented.");
+}
+
