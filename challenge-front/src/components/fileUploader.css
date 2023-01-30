@@ -1,14 +1,14 @@
-.form_container {
+.form-container {
   margin: 20px 0;
   display: flex;
   flex-direction: column;
 }
 
-.input-file {
+.form-container .input-file {
   visibility: hidden;
 }
 
-label,button {
+.form-container label, .form-container button {
   border: none;
   border-radius: 2px;
   padding: 12px 18px;
@@ -20,7 +20,7 @@ label,button {
   text-align: center;
 }
 
-label:hover, button:hover {
+.form-container label:hover, .form-container button:hover {
   background-color: rgb(209, 209, 209);
   background-size: 100%;
   transition: background 0s;

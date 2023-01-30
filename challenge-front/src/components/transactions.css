@@ -1,0 +1,88 @@
+:root {
+    --table-width: 15vw;
+}
+
+th, td{
+  padding: 15px 0px;
+  text-align: center;
+}
+
+table{
+    margin-top: 10px;
+
+}
+.total-price{
+    position: sticky;
+    top: 0;
+    margin-bottom: 10px;
+    padding: auto;
+}
+.placar-style {
+  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    border-top: 0.2rem solid #bebebe;
+    background: #f2f3f5;
+    color: black;
+    padding: 15px;
+    border-radius: 0px 0px 10px 10px; 
+  }
+
+  .placar-style > strong {
+    margin: 0px 4px;
+  }
+
+th {
+    background-color: #36304a;
+    position: sticky;
+    top: 0;
+    padding: 16px;
+}
+
+thead {
+    color: white;
+    
+}
+
+tr {
+    background-color: #ffffff;
+}
+
+tr:nth-child(odd) td{
+    background-color: #f8f8f8;
+}
+
+tr:hover td {
+    background:#36304a2a;
+}
+
+table {
+    width: calc(var(--table-width) * 5px + var(--scrollbar-width));
+    border-spacing: 0;
+}
+
+tbody, thead tr { display: block; }
+
+tbody {
+    height: 50vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+tbody td, thead th {
+    width: var(--table-width);
+}
+
+thead th:last-child {
+    width: calc(var(--table-width) + var(--scrollbar-width));
+}
+
+th:first-child {
+    border-top-left-radius: 10px;
+}
+
+th:last-child {
+    border-top-right-radius: 10px;
+}

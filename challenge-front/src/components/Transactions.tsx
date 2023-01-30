@@ -1,44 +1,36 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { ITransactions } from "@/domain/interfaces/transaction.interface";
-import { toast } from "react-toastify"
-import Moment from 'react-moment';
+import Moment from "react-moment";
+import ToastMessage from "@/services/ToastMessage";
 
-
-const Transactions = () => {
+const Transactions = ({ transactionsService }: any) => {
   const initTransactions: Array<ITransactions> = [];
   const [transactions, setTransactions] = useState(initTransactions);
-  const url: string = `http://${process.env.BACKEND_HOST}:4000/transactions`;
+
 
   useEffect(() => {
-    requestTransactions();
-  });
+    transactionsService
+      .requestTransactions()
+      .then((response: any) => setTransactions(response.data.transaction))
+      .catch((e: any) => ToastMessage.showError("Ops! Fail to load data."));
 
-  const requestTransactions = async () => {
-    await axios
-      .get(url)
-      .then((response) => {
-        setTransactions(response.data.transaction);
-      })
-      .catch((e) => {
-        toast.error('Ops! Fail to load data.', {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-          });
-      });
-  };
+    transactionsService.onFileUploaded(() => {
+      transactionsService
+        .requestTransactions()
+        .then((response: any) => setTransactions(response.data.transaction))
+        .catch((e: any) => ToastMessage.showError("Ops! Fail to load data."));
+    });
+  }, []);
+
   const getTotalTransactions = () => {
     const totalTransactions = transactions.reduce(
-      (accum, obj) => accum + obj.price/100,
+      (accum, obj) => accum + obj.price / 100,
       0
     );
-    return totalTransactions.toLocaleString("pt-BR", {style: 'currency', currency: 'BRL' });
+    return totalTransactions.toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    });
   };
 
   return (
@@ -59,9 +51,16 @@ const Transactions = () => {
               return (
                 <tr key={index}>
                   <td>{data.type}</td>
-                  <td><Moment>{data.date}</Moment></td>
+                  <td>
+                    <Moment format="DD/MM/YYYY HH:mm">{data.date}</Moment>
+                  </td>
                   <td>{data.product}</td>
-                  <td>{(data.price/100).toLocaleString("pt-BR", {style: 'currency', currency: 'BRL' })}</td>
+                  <td>
+                    {(data.price / 100).toLocaleString("pt-BR", {
+                      style: "currency",
+                      currency: "BRL",
+                    })}
+                  </td>
                   <td>{data.seller}</td>
                 </tr>
               );
@@ -71,7 +70,7 @@ const Transactions = () => {
       </div>
       <div className="total-price">
         <div className="placar-style">
-          <strong>Transactions total value = </strong>
+          <strong>Transactions total: </strong>
           {getTotalTransactions()}
         </div>
       </div>
@@ -80,7 +79,3 @@ const Transactions = () => {
 };
 
 export default Transactions;
-function moment(date: Date) {
-  throw new Error("Function not implemented.");
-}
-

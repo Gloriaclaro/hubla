@@ -1,7 +1,7 @@
 import '@/styles/globals.css'
-import '@/styles/TransactionsPage.css'
-import '@/styles/FileUploader.css'
-import '@/styles/Transactions.css'
+import '@/components/fileUploader.css'
+import '@/components/transactions.css'
+import '@/pages/transactions.css'
 import 'react-toastify/dist/ReactToastify.css';
 
 import type { AppProps } from 'next/app'
