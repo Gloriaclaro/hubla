@@ -67,7 +67,7 @@ $ npm start
 ```
 $ cd challenge-front/
 $ npm install
-$ npm start
+$ npm run dev
 ```
 
 ## Database docker-compose
