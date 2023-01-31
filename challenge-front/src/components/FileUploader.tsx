@@ -12,12 +12,11 @@ const FileUploader = ({transactionsService} : any) => {
     event.preventDefault();
 
     const currentTarget = event.currentTarget;
-    const files = currentTarget.elements.file.files;
-
-    if (!files) return;
-    
+    const files = currentTarget.elements.file.files || [];
     const file = files[0];
 
+    if (!file) return;
+    
     const formData = new FormData();
     formData.append("file", file);
 

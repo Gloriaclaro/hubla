@@ -17,18 +17,20 @@ class TransactionsService {
   }
 
   uploadFile(file: FormData): any {
-    this.requestChallengeApi(file);
-
-    this.onFileUploadPromise.then((callback) => {
-      callback();
+    this.requestChallengeApi(file).then(() => {
+      this.onFileUploadPromise.then((callback) => {
+        callback();
+      });
     });
+
   }
 
   async requestChallengeApi(file: FormData) {
-    await axios
-      .post(this.post_transactions_url, file, {
-        headers: { "Content-Type": "multipart/form-data" },
-      })
+    const promise = axios.post(this.post_transactions_url, file, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+
+    promise
       .then(({ data }) => {
         if (data.error) {
           const message = "Please verify your file content." + data.message;
@@ -41,6 +43,8 @@ class TransactionsService {
         const message = "Ops! Unexpected error, please verify your file.";
         ToastMessage.showError(message);
       });
+
+    return promise;
   }
 
   async requestTransactions() {

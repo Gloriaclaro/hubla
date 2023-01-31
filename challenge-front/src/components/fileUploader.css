@@ -18,6 +18,7 @@
   box-shadow: 0 0 4px #999;
   outline: none;
   text-align: center;
+  background-color: white;
 }
 
 .form-container label:hover, .form-container button:hover {

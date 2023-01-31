@@ -1,9 +1,9 @@
 import FileUploader from "../components/FileUploader";
 import Transactions from "@/components/Transactions";
 import { ToastContainer, toast } from "react-toastify"
-import TractionsService from '../services/TransactionsService'
+import TransactionsService from '../services/TransactionsService'
 
-const transactionsService = new TractionsService();
+const transactionsService = new TransactionsService();
 
 const TransactionsPage = () => {
 
@@ -11,7 +11,7 @@ const TransactionsPage = () => {
     <main className="main">
       <h1 className="main_title">Transactions</h1>
       <ToastContainer
-        position="top-center"
+        position="bottom-right"
         autoClose={5000}
         hideProgressBar={false}
         newestOnTop={false}
