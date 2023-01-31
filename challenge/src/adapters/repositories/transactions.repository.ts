@@ -16,29 +16,34 @@ class TransactionsRepository implements ITransactionRepository {
     private readonly transactionsRepository: Repository<Transaction>,
   ) {}
 
-  async getAll(): Promise<Either<FindError, Promise<Array<Transaction>>>> {
-    const transactions = this.transactionsRepository.find({});
-    if (!transactions) {
+  async getAll(): Promise<Either<FindError, Array<Transaction>>> {
+    try {
+      const transactions = await this.transactionsRepository.find({});
+      return right(transactions);
+    }catch (error){
       return left(new FindError());
     }
-    return right(transactions);
   }
 
   async save(
     createTransactionDtos: Array<CreateTransactionDto>,
   ): Promise<Either<InsertionError, Array<Transaction>>> {
-    const transactionsEntities = TransactionExtension.toTransactionsEntity(
-      createTransactionDtos,
-    );
+    try {
+      const transactionsEntities = TransactionExtension.toTransactionsEntity(
+        createTransactionDtos,
+      );
+      const transactions = await this.transactionsRepository.save(
+        transactionsEntities,
+      );
+      if (transactions) {
+        return right(transactions);
+      }
 
-    const transactions = await this.transactionsRepository.save(
-      transactionsEntities,
-    );
-    if (transactions) {
-      return right(transactions);
-    }
-    return left(new InsertionError());
+    } catch(error) {
+      return left(new InsertionError());
+    } 
   }
 }
+
 
 export default TransactionsRepository;

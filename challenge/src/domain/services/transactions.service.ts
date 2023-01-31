@@ -3,16 +3,16 @@ import TransactionsRepository from '../../adapters/repositories/transactions.rep
 import { Either, left, right } from '../../shared/either';
 import CreateTransactionDto from '../dto/create-transaction.dto';
 import ReturnTransactionDto from '../dto/return-transaction.dto';
-import Transaction from '../entities/transactions.entity';
 import FindError from '../errors/find-error';
 import InsertionError from '../errors/insert-error';
 import InvalidTransactionError from '../errors/invalid-transaction-error';
 import TransactionExtension from '../extension/transaction.extension';
+import { ITransactionRepository } from '../repositories/transactionRepository.interface';
 
 
 @Injectable()
 export class TransactionsService {
-  constructor(private readonly transactionsRepository: TransactionsRepository) {}
+  constructor(private readonly transactionsRepository: ITransactionRepository) {}
 
 
   async getAllTransactions(): Promise<Either<FindError, ReturnTransactionDto>>{
