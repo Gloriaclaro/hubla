@@ -3,8 +3,8 @@ import ToastMessage from "./ToastMessage";
 
 class TransactionsService {
   backend_host = process.env.BACKEND_HOST;
-  post_transactions_url: string = `http://${this.backend_host}:4000/upload`;
-  get_transactions_url: string = `http://${this.backend_host}:4000/transactions`;
+  post_transactions_url: string = `http://localhost:4000/upload`;
+  get_transactions_url: string = `http://localhost:4000/transactions`;
 
   resolveFileUpload: any;
 
