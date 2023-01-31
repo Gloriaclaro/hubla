@@ -12,6 +12,3 @@ COPY . .
 
 RUN npm run build
 
-ENV BACKEND_HOST backend
-
-CMD ["npm", "run", "dev"]

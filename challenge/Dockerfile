@@ -1,12 +1,12 @@
-FROM node:12.19.0-alpine3.9 AS development
+FROM node:14.20.0
 
-WORKDIR /usr/src/app
+WORKDIR /usr/src/app/
 
 COPY package*.json ./
 
-RUN npm install glob rimraf
+RUN npm install
 
-RUN npm install --only=development
+EXPOSE 4000
 
 COPY . .
 
