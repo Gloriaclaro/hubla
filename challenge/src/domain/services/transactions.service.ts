@@ -1,8 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import TransactionsRepository from '../../adapters/repositories/transactions.repository';
+import { InjectRepository } from '@nestjs/typeorm';
+import TransactionsRepository from 'src/adapters/repositories/transactions.repository';
 import { Either, left, right } from '../../shared/either';
 import CreateTransactionDto from '../dto/create-transaction.dto';
 import ReturnTransactionDto from '../dto/return-transaction.dto';
+import Transaction from '../entities/transactions.entity';
 import FindError from '../errors/find-error';
 import InsertionError from '../errors/insert-error';
 import InvalidTransactionError from '../errors/invalid-transaction-error';
@@ -12,7 +14,8 @@ import { ITransactionRepository } from '../repositories/transactionRepository.in
 
 @Injectable()
 export class TransactionsService {
-  constructor(private readonly transactionsRepository: ITransactionRepository) {}
+  constructor(@InjectRepository(Transaction) private transactionsRepository: ITransactionRepository) {
+  }
 
 
   async getAllTransactions(): Promise<Either<FindError, ReturnTransactionDto>>{
@@ -21,7 +24,7 @@ export class TransactionsService {
       return left(transactionsOrError.value)
     }
     const returnTransactionsDto = new ReturnTransactionDto()
-    returnTransactionsDto.transaction = await transactionsOrError.value
+    returnTransactionsDto.transaction = transactionsOrError.value
     returnTransactionsDto.message = "Transactions load with success"
     
     return right(returnTransactionsDto)
