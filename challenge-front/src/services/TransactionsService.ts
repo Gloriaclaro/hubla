@@ -33,7 +33,7 @@ class TransactionsService {
     promise
       .then(({ data }) => {
         if (data.error) {
-          const message = "Please verify your file content." + data.message;
+          const message = data.message;
           return ToastMessage.showError(message);
         }
 
