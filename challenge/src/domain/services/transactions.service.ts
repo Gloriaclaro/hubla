@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import TransactionsRepository from 'src/adapters/repositories/transactions.repository';
+import TransactionsRepository from '../../adapters/repositories/transactions.repository';
 import { Either, left, right } from '../../shared/either';
 import CreateTransactionDto from '../dto/create-transaction.dto';
 import ReturnTransactionDto from '../dto/return-transaction.dto';
@@ -8,13 +8,14 @@ import Transaction from '../entities/transactions.entity';
 import FindError from '../errors/find-error';
 import InsertionError from '../errors/insert-error';
 import InvalidTransactionError from '../errors/invalid-transaction-error';
+import InvalidTransactionRowError from '../errors/invalid-transaction-row-error';
 import TransactionExtension from '../extension/transaction.extension';
-import { ITransactionRepository } from '../repositories/transactionRepository.interface';
+import { ITransactionRepository } from '../repositories/transaction-repository.interface';
 
 
 @Injectable()
 export class TransactionsService {
-  constructor(@InjectRepository(Transaction) private transactionsRepository: ITransactionRepository) {
+  constructor(@InjectRepository(TransactionsRepository) private transactionsRepository: ITransactionRepository) {
   }
 
 
@@ -30,7 +31,7 @@ export class TransactionsService {
     return right(returnTransactionsDto)
   }
 
-  async processAndSaveTransactions(transactions: string): Promise<Either<InsertionError | InvalidTransactionError, ReturnTransactionDto>> {
+  async processAndSaveTransactions(transactions: string): Promise<Either<InsertionError | InvalidTransactionRowError | InvalidTransactionError, ReturnTransactionDto>> {
     const processedTransactionsOrError = await this.processTransactions(transactions)
 
     if (processedTransactionsOrError.isLeft()) {
@@ -39,10 +40,16 @@ export class TransactionsService {
     return right(processedTransactionsOrError.value)
   }
 
-  async processTransactions(rawTransactions: string): Promise<Either<InsertionError | InvalidTransactionError, ReturnTransactionDto>>{
+  async processTransactions(rawTransactions: string): Promise<Either<InsertionError | InvalidTransactionRowError | InvalidTransactionError, ReturnTransactionDto>>{
     const transactions = rawTransactions.split('\n')
 
-    const transactionsDtoOrError = TransactionExtension.toTransactionsDto(transactions)
+    const transactionsRowOrError = TransactionExtension.toTransactionsRowDto(transactions)
+    
+    if (transactionsRowOrError.isLeft()){
+      return left(transactionsRowOrError.value)
+    }
+    
+    const transactionsDtoOrError = TransactionExtension.toTransactionsDto(transactionsRowOrError.value)
 
     if (transactionsDtoOrError.isLeft()){
       return left(transactionsDtoOrError.value)
@@ -59,8 +66,8 @@ export class TransactionsService {
 
 
   async saveTransactions(createTransactionDto: Array<CreateTransactionDto>): Promise<Either<InsertionError, ReturnTransactionDto>> {
-    const transactionOrError = await this.transactionsRepository.save(createTransactionDto);
-    
+    const transactionOrError = await this.transactionsRepository.saveTransactions(createTransactionDto);
+
     if (transactionOrError.isLeft()) {
       return left(transactionOrError.value);
     }

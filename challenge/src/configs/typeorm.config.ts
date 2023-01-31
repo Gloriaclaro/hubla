@@ -1,5 +1,6 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { config } from 'dotenv';
+import Transaction from '../domain/entities/transactions.entity';
 
 config()
 
@@ -10,7 +11,7 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
   username: 'admin',
   password: 'admin',
   database: 'postgres',
-  entities: [__dirname + '/../**/*.entity.{js,ts}'],
+  entities: [Transaction],
   synchronize: true,
-
+  autoLoadEntities: true,
 };

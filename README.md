@@ -77,7 +77,7 @@ $ cd challenge/
 $ sudo docker-compose up
 ```
 
-## Testing
+## Testing Backend
 
 ```
 $ cd challenge/

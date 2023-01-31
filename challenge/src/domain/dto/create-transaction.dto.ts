@@ -21,14 +21,14 @@ class CreateTransactionDto {
             return left(new InvalidTransactionError("Type"))
         }
 
-        if(!CreateTransactionDto.validateProduct(product)) {
-            return left(new InvalidTransactionError("Product"))
-        }
-
         if(!CreateTransactionDto.validateDate(date)) {
             return left(new InvalidTransactionError("Date"))
         }
 
+        if(!CreateTransactionDto.validateProduct(product)) {
+            return left(new InvalidTransactionError("Product"))
+        }
+        
         if(!CreateTransactionDto.validatePrice(price)) {
             return left(new InvalidTransactionError("Price"))
         }
@@ -55,6 +55,9 @@ class CreateTransactionDto {
     }
 
     static validateDate(date: Date): boolean {
+        if (!(date instanceof Date && !isNaN(date.valueOf()))){
+            return false
+        }
         if(!date){
             return false
         }

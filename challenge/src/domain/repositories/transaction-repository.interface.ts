@@ -7,5 +7,5 @@ import InsertionError from '../errors/insert-error';
 
 export interface ITransactionRepository {
     getAll(): Promise<Either<FindError, Array<Transaction>>>;
-    save(createTransactionDto:Array<CreateTransactionDto>):Promise<Either<InsertionError, Array<Transaction>>>;
+    saveTransactions(createTransactionDto:Array<CreateTransactionDto>):Promise<Either<InsertionError, Array<Transaction>>>;
 }

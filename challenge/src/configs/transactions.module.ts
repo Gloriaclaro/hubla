@@ -6,8 +6,10 @@ import TransactionsRepository from '../adapters/repositories/transactions.reposi
 import { TransactionsService } from '../domain/services/transactions.service';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([Transaction])],
+    imports: [ TypeOrmModule.forFeature([Transaction])],
     providers: [TransactionsService, TransactionsRepository],
     controllers: [TransactionsController],
+    exports: [TypeOrmModule]
+
 })
 export class TransactionsModule {}
